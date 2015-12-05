@@ -21,4 +21,9 @@ public class HomeController {
 		return "index";
 	}
 
+	@RequestMapping("/note")
+	public String note() {
+		return "note";
+	}
+
 }

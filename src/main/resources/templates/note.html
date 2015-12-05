@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" data-ng-app="testApp">
+<head>
+<meta charset="utf-8" />
+</head>
+<body>
+
+<div data-ng-view=""></div>
+
+<script th:src="@{/webjars/angularjs/1.4.8/angular.js}"></script>
+<script th:src="@{/webjars/angularjs/1.4.8/angular-route.js}"></script>
+<script th:src="@{/webjars/angularjs/1.4.8/angular-resource.js}"></script>
+<script type="text/javascript">
+var testApp = angular.module('testApp', ['ngRoute', 'testControllers', 'testServices']);
+testApp.config(['$routeProvider',
+	function($routeProvider) {
+		$routeProvider.
+			when('/list', {
+				templateUrl: 'note-list.html',
+				controller: 'TestCtrl'
+			}).
+			otherwise({
+				redirectTo: '/list'
+			});
+	}]);
+
+var testControllers = angular.module('testControllers', []);
+testControllers.controller('TestCtrl', ['$scope', 'Item',
+	function($scope, Item) {
+		$scope.name = 'world';
+		$scope.items = Item.query();
+		$scope.hello = function(name) {
+			alert('Hello, ' + name + '!');
+		};
+	}]);
+
+var testServices = angular.module('testServices', ['ngResource']);
+testServices.factory('Item', ['$resource',
+	function($resource) {
+		return $resource(':itemId.json', {}, {
+			query: {
+				method: 'GET',
+				params: { itemId: 'items' },
+				isArray: true
+			}
+		});
+	}]);
+
+</script>
+</body>
+</html>

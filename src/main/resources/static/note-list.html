@@ -1,0 +1,13 @@
+<h1>Hello, {{name}}!</h1>
+
+<p>Search: <input data-ng-model="query" /></p>
+
+<ul>
+	<li data-ng-repeat="item in items | filter: query">
+		{{item.id}} {{item.name}}
+	</li>
+</ul>
+
+<p>Total number of items: {{items.length}}</p>
+
+<button data-ng-click="hello('world')">Hello</button>
